@@ -22,6 +22,7 @@ var Finder = {
 	showAction: function()
 		{
 			$('#videoLocation').hide();
+			$('#videoLocation').empty();
 			$('#searchContainer').css("position","relative");
 			$('#searchContainer').css("margin-left","0");
 			Finder.validate();
@@ -45,7 +46,7 @@ var Finder = {
 				$('#imageLocation').hide();
 				$('.buttons').hide();
 				$('#infoLocation').empty();
-				var itemDiv = '<img src="img/276.GIF" id="loading"></img>';
+				var itemDiv = '<img src="img/276.GIF" id="infoloading"></img>';
 				$('#infoLocation').append(itemDiv);
 				$('#infoLocation').show();
 				Finder.showAction();
@@ -104,21 +105,10 @@ var Finder = {
 	fetchUserId: function(value) {
 	 $.getJSON(Finder.base+'/users/search?callback=?&q='+value, Finder.params, function(response) {
 			console.log(response);
-	        		Finder.errorHandler(response)
+	        		Finder.fetchInfoById(response);
 	        	});
 	},
-	errorHandler:function(value){
-		if(value != null){
-			Finder.fetchInfoById(value);
-		}
-		else{
-		var itemDiv = '<h1>Oops! Server Error, Try again  in few Minutes</h1><img src="img/397.GIF" id="mygif"></img>';
-		$('#imageLocation').append(itemDiv);
-		}
-	},
 	fetchUserfollowers: function(value) {
-		// $('#infoLocation').empty();
-		 $('#loading').fadeOut();
 		$.getJSON(Finder.base+'/users/'+value+'/?callback=?', Finder.params, function(response) {
 	        Finder.loadUserId(response);     
 	    });
@@ -146,7 +136,6 @@ var Finder = {
 				var itemDiv = '<li class="items">' + 
 					'<video controls src="' + item.videos.low_resolution.url + '" class="vid" width="100%" height="300">' +
 					'</video>'+'<p class="caption">'+caption+'</p>'+'</li>';
-				$('#videoLocation').empty();
 				$('#videoLocation').append(itemDiv)	;
 				$('#loading').fadeOut();
 				}
@@ -174,6 +163,7 @@ var Finder = {
 	},
 	fetchInfoById:function(response){
 		if (response.data.length > 0){
+			$('#infoloading').fadeOut();
 			var Result = '<div id="result">( '+response.data.length+' ) Profile(s) Returned</div>';
 			$('#infoLocation').append(Result);
 			$.each(response.data,function(){
