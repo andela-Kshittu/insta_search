@@ -13,7 +13,7 @@ var Finder = {
 			Finder.connectButton = $('#connectButton');
 			Finder.connectButton2 = $('#connectButton2');
 			$('#videoLocation').hide();
-			Finder.fetchItems("Videos");
+			Finder.fetchItems("videos");
 			$('#result').hide();
 			$('.buttons').show();
 			Finder.initEvent();
@@ -29,12 +29,12 @@ var Finder = {
 	initEvent:function()
 		{
 			Finder.connectButton.click(function(){
-				// to know what to fetch media or location linked with test Input
+				// to know what to fetch media or people linked with test Input
 				Finder.allow = true; 
 				//*************************************************
 				$('#infoLocation').hide();
 				$('#imageLocation').empty();
-				var itemDiv = '<img src="img/276.gif" id="loading"></img>';
+				var itemDiv = '<img src="img/276.GIF" id="loading"></img>';
 				$('#imageLocation').append(itemDiv);
 				$('.buttons').show();
 				$('#imageLocation').show();
@@ -45,7 +45,7 @@ var Finder = {
 				$('#imageLocation').hide();
 				$('.buttons').hide();
 				$('#infoLocation').empty();
-				var itemDiv = '<img src="img/276.gif" id="loading"></img>';
+				var itemDiv = '<img src="img/276.GIF" id="loading"></img>';
 				$('#infoLocation').append(itemDiv);
 				$('#infoLocation').show();
 				Finder.showAction();
@@ -53,6 +53,7 @@ var Finder = {
 		},
 	testInput: function(value)
 		{
+			Finder.invalidInput.empty();
 			if((value.length>1)&&(/^[a-zA-Z0-9_]*$/.test(value) === true))
 			{
 				Finder.invalidInput.text("");
@@ -87,7 +88,7 @@ var Finder = {
 		});
 		$('#videoButton').click(function(){
 			if ($('#videoLocation').is(':empty')){
-				var itemDiv = '<h1>No Result Found</h1><img src="img/397.gif" id="mygif"></img>';
+				var itemDiv = '<h1>No Result Found</h1><img src="img/397.GIF" id="mygif"></img>';
 				$('#videoLocation').append(itemDiv);
 			}
 			$('#imageLocation').hide();
@@ -96,8 +97,6 @@ var Finder = {
 		});
 	},
 	fetchItems: function(value) {
-			// $('#videoLocation').empty();
-			// $('#imageLocation').empty();
 		$.getJSON(Finder.base+'/tags/'+value+'/media/recent?callback=?', Finder.params, function(response) {
 	        		Finder.loadItems(response);
 	        	});
@@ -113,7 +112,7 @@ var Finder = {
 			Finder.fetchInfoById(value);
 		}
 		else{
-		var itemDiv = '<h1>Oops! Server Error, Try again  in few Minutes</h1><img src="img/397.gif" id="mygif"></img>';
+		var itemDiv = '<h1>Oops! Server Error, Try again  in few Minutes</h1><img src="img/397.GIF" id="mygif"></img>';
 		$('#imageLocation').append(itemDiv);
 		}
 	},
@@ -154,7 +153,7 @@ var Finder = {
 			});
 		}
 		else{
-			var itemDiv = '<h1>No Result Found</h1><img src="img/397.gif" id="mygif"></img>';
+			var itemDiv = '<h1>No Result Found</h1><img src="img/397.GIF" id="mygif"></img>';
 				$('#imageLocation').append(itemDiv);
 				$('#videoLocation').empty();
 				$('#videoLocation').append(itemDiv);
@@ -167,8 +166,8 @@ var Finder = {
 			var itemDiv = '<li class="items">' + 
 				'<img src="' + item.profile_picture + '" class="pic" width="100%"/>' +'<p class="caption2">'+'USER NAME : '+item.username+
 				'</p>'+'<p class="caption2">'+'NAME : '+item.full_name+'</p>'+'<p class="caption2">'+'MEDIA POSTS : '
-				+item.counts.media+'</p>'+'<p class="caption2">'+'<img src="img/214.gif"></img> : '+item.counts.follows+"  "+
-				'<img src="img/187.gif"></img> : '+item.counts.followed_by+'</p>'+'<p class="caption2">'+'USER ID : '+item.id+'</p>'+
+				+item.counts.media+'</p>'+'<p class="caption2">'+'<img src="img/214.GIF"></img> : '+item.counts.follows+"  "+
+				'<img src="img/187.GIF"></img> : '+item.counts.followed_by+'</p>'+'<p class="caption2">'+'USER ID : '+item.id+'</p>'+
 				'</li>';
 			$('#infoLocation').append(itemDiv);
 		$('#searchInput').val("");
@@ -184,8 +183,7 @@ var Finder = {
 				);
 		}
 		else{
-			// $('#infoLocation').empty();
-			var itemDiv = '<h1>No Result Found</h1><img src="img/397.gif" id="mygif"></img>';
+			var itemDiv = '<h1>No Result Found</h1><img src="img/397.GIF" id="mygif"></img>';
 			$('#infoLocation').append(itemDiv);
 			$('#loading').fadeOut();
 			$('#searchInput').val("");
